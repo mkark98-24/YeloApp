@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "287907690626",
+    "firebase_url": "https://yeloapp-1526849284615.firebaseio.com",
+    "project_id": "yeloapp-1526849284615",
+    "storage_bucket": "yeloapp-1526849284615.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287907690626:android:c83e90cbc54a9eb3",
+        "android_client_info": {
+          "package_name": "com.ddinc.yeloapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287907690626-pdiv4i7ic0h6rc1ikjhrperdhbi9t2j1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "287907690626-1h83gup1mdsne1jsngrf8v8nublgu4qj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ddinc.yeloapp",
+            "certificate_hash": "e63356dd073212f17b4326f7cceccea3e9973551"
+          }
+        },
+        {
+          "client_id": "287907690626-qh8b0nit9f15h54150k5mpdbqb2n0h4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyCsxaWI9-rViKXY9GBFlmPtjareQiFYA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287907690626-pdiv4i7ic0h6rc1ikjhrperdhbi9t2j1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
