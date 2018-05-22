@@ -19,10 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="android.support.VERSION"
             android:value="27.1.1"
-            tools:replace="android:value"/>
+            tools:replace="android:value" />
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBl4DHmzphkf0IMCZwUaeOxUY8mWdkF2qc" />
+
+
+        <activity android:name=".FormActivity">
+
+        </activity>
     </application>
 
 </manifest>

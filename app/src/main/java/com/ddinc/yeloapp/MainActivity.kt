@@ -1,6 +1,7 @@
 package com.ddinc.yeloapp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -41,13 +42,21 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
 
         prof_section.visibility = View.GONE
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("287907690626-pdiv4i7ic0h6rc1ikjhrperdhbi9t2j1.apps.googleusercontent.com")
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        btn_start.setOnClickListener {
+            val intent = Intent(this, FormActivity::class.java)
+            intent.putExtra("p_name", prof_name.text)
+            intent.putExtra("p_mail", prof_mail.text)
+            intent.putExtra("p_pic", url.toString())
+            startActivity(intent)
+        }
 
     }
 
@@ -124,11 +133,14 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                 }
     }
 
+    lateinit var url: Uri
+
     fun updateUI(account: FirebaseUser?) {
         if (account != null) {
             btn_login.visibility = View.GONE
             prof_name.text = account.displayName
             prof_mail.text = account.email
+            url = account.photoUrl!!
             Glide.with(this).load(account.photoUrl).into(prof_pic)
             prof_section.visibility = View.VISIBLE
         } else {
