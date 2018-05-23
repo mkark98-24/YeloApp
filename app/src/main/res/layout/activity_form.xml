@@ -64,49 +64,50 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:elevation="10dp"
-        app:cardCornerRadius="10dp">
-
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.CardView>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_address"
+        <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_margin="15dp"
             android:layout_weight="1"
-            android:hint="Type in search bar to find address or turn on GPS to choose current location"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:textColor="#ffffff" />
+            android:elevation="10dp"
+            app:cardCornerRadius="10dp">
+
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
 
         <ImageButton
             android:id="@+id/btn_gps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginEnd="15dp"
             android:background="#00ffffff"
             android:clickable="true"
             android:elevation="10dp"
             android:focusable="true"
             android:src="@drawable/ic_gps_fixed_black_24dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:hint="Type in search bar to find address or turn on GPS to choose current location"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+        android:textColor="#ffffff" />
 
 
     <ImageButton
@@ -117,11 +118,20 @@
         android:background="#00dadada"
         android:src="@drawable/ic_keyboard_voice_black_24dp" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tap and hold to record voice message"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+    <ImageButton
+        android:id="@+id/btn_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#00dadada"
+        android:src="@drawable/ic_play_arrow_black_24dp" />
 
     <Button
         android:id="@+id/btn_submit"

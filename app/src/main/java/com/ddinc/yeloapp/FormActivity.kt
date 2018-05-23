@@ -9,14 +9,19 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -31,6 +36,7 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_form.*
+import java.io.IOException
 
 
 class FormActivity : AppCompatActivity(), LocationListener {
@@ -56,6 +62,55 @@ class FormActivity : AppCompatActivity(), LocationListener {
     val TAG = "FormActivity"
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mLocationManager: LocationManager
+
+    private val LOG_TAG = "AudioRecordTest"
+    private var mFileName: String? = null
+
+    private var mRecorder: MediaRecorder? = null
+    private var mPlayer: MediaPlayer? = null
+
+    // Requesting permission to RECORD_AUDIO
+    private var permissionToRecordAccepted = false
+
+    private fun startPlaying() {
+        mPlayer = MediaPlayer()
+        try {
+            mPlayer!!.setDataSource(mFileName)
+            mPlayer!!.prepare()
+            mPlayer!!.start()
+        } catch (e: IOException) {
+            Log.e(LOG_TAG, "prepare() failed")
+        }
+
+    }
+
+    private fun stopPlaying() {
+        mPlayer?.release()
+        mPlayer = null
+    }
+
+    private fun startRecording() {
+        mRecorder = MediaRecorder()
+        mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+        mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        mRecorder!!.setOutputFile(mFileName)
+        mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+
+        try {
+            mRecorder?.prepare()
+        } catch (e: IOException) {
+            Log.e(LOG_TAG, "prepare() failed")
+        }
+
+        mRecorder!!.start()
+    }
+
+    private fun stopRecording() {
+        mRecorder!!.stop()
+        mRecorder!!.release()
+        mRecorder = null
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,10 +173,65 @@ class FormActivity : AppCompatActivity(), LocationListener {
             }
         }
 
+        // Record to the external cache directory for visibility
+        mFileName = Environment.getExternalStorageDirectory().absolutePath
+        mFileName += "/audiorecordtest.3gp"
+
+        btn_play.visibility = View.GONE
+
+        ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                54)
+
+        btn_record.setOnTouchListener { v, event ->
+
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    startRecording()
+                }
+                MotionEvent.ACTION_UP -> {
+                    stopRecording()
+                    btn_play.visibility = View.VISIBLE
+                }
+            }
+
+            v?.onTouchEvent(event) ?: true
+        }
+
+        btn_play.setOnTouchListener { v, event ->
+
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    startPlaying()
+                }
+                MotionEvent.ACTION_UP -> {
+                    stopPlaying()
+                }
+            }
+            v?.onTouchEvent(event) ?: true
+        }
+
         btn_submit.setOnClickListener {
 
         }
+
+
     }
+
+    public override fun onStop() {
+        super.onStop()
+        if (mRecorder != null) {
+            mRecorder!!.release()
+            mRecorder = null
+        }
+
+        if (mPlayer != null) {
+            mPlayer!!.release()
+            mPlayer = null
+        }
+    }
+
 
     @SuppressLint("MissingPermission")
     private fun getPlace() {
@@ -147,7 +257,7 @@ class FormActivity : AppCompatActivity(), LocationListener {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             when (requestCode) {
                 44 -> {
                     if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -156,24 +266,50 @@ class FormActivity : AppCompatActivity(), LocationListener {
                         getPlace()
                     }
                 }
+
+                54 -> {
+                    //record
+                    permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            64)
+                }
+
+                64 -> {
+
+                }
             }
         } else {
             AlertDialog.Builder(this)
-                    .setMessage("We need this permission to read/write files \n " +
-                            "Please grant the permission")
-                    .setPositiveButton("GIVE PERMISSION", { dialog, i ->
-                        ActivityCompat.requestPermissions(
-                                this,
-                                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                                45
-                        )
+                    .setMessage("Please grant the permission")
+                    .setPositiveButton("YES", { dialog, i ->
+                        when (requestCode) {
+                            44 -> ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                                    44
+                            )
+                            54 -> ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.RECORD_AUDIO),
+                                    54
+                            )
+                            64 -> ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    64
+                            )
+                        }
                     })
-                    .setNegativeButton("NO THANKS", { dialog, i ->
+                    .setNegativeButton("NO", { dialog, i ->
+                        onBackPressed()
                         Toast.makeText(this, "Sigh! I tried", Toast.LENGTH_SHORT).show()
                     })
                     .create()
                     .show()
         }
+//        if (!permissionToRecordAccepted) finish()
     }
 
     fun showGPSDiabledDialog() {
