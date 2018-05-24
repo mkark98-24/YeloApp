@@ -35,6 +35,8 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_form.*
 import java.io.IOException
 
@@ -62,6 +64,8 @@ class FormActivity : AppCompatActivity(), LocationListener {
     val TAG = "FormActivity"
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mLocationManager: LocationManager
+    lateinit var myRef: DatabaseReference
+    lateinit var picUrl: String
 
     private val LOG_TAG = "AudioRecordTest"
     private var mFileName: String? = null
@@ -111,6 +115,7 @@ class FormActivity : AppCompatActivity(), LocationListener {
         mRecorder = null
     }
 
+    lateinit var idToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +125,9 @@ class FormActivity : AppCompatActivity(), LocationListener {
         if (extras != null) {
             prof_name2.text = extras.getString("p_name")
             prof_mail2.text = extras.getString("p_mail")
-            Glide.with(this).load(Uri.parse(extras.getString("p_pic"))).into(prof_pic2)
+            picUrl = extras.getString("p_pic")
+            idToken = extras.getString("id_token")
+            Glide.with(this).load(Uri.parse(picUrl)).into(prof_pic2)
         }
 
 
@@ -132,6 +139,8 @@ class FormActivity : AppCompatActivity(), LocationListener {
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "Place: " + place.name)
                 tv_address.text = place.address
+                tv_place.text = place.name
+                tv_place.visibility = View.VISIBLE
             }
 
             override fun onError(status: Status) {
@@ -154,6 +163,7 @@ class FormActivity : AppCompatActivity(), LocationListener {
                     }
         }
         mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        tv_place.visibility = View.GONE
 
         btn_gps.setOnClickListener {
             when (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -178,6 +188,7 @@ class FormActivity : AppCompatActivity(), LocationListener {
         mFileName += "/audiorecordtest.3gp"
 
         btn_play.visibility = View.GONE
+        tv_play.visibility = View.GONE
 
         ActivityCompat.requestPermissions(
                 this,
@@ -189,10 +200,13 @@ class FormActivity : AppCompatActivity(), LocationListener {
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> {
                     startRecording()
+                    tv_record.text = ("Recording ...").toString()
                 }
                 MotionEvent.ACTION_UP -> {
                     stopRecording()
+                    tv_record.text = ("Tap and hold to record again").toString()
                     btn_play.visibility = View.VISIBLE
+                    tv_play.visibility = View.VISIBLE
                 }
             }
 
@@ -204,16 +218,27 @@ class FormActivity : AppCompatActivity(), LocationListener {
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> {
                     startPlaying()
+                    tv_play.text = ("Playing ...").toString()
                 }
                 MotionEvent.ACTION_UP -> {
                     stopPlaying()
+                    tv_play.text = ("Tap and hold to play again").toString()
                 }
             }
             v?.onTouchEvent(event) ?: true
         }
 
         btn_submit.setOnClickListener {
-
+            idToken = idToken.replace(".", "_")
+            idToken = idToken.replace("#", "_")
+            idToken = idToken.replace("$", "_")
+            idToken = idToken.replace("[", "_")
+            idToken = idToken.replace("]", "_")
+            Log.i(TAG, String.format("idtoken : %s", idToken))
+            val newObject = Model(idToken, prof_name2.text.toString(), prof_mail2.text.toString(), picUrl, tv_place.text.toString() + " " + tv_address.text.toString())
+            myRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://yeloapp-1526849284615.firebaseio.com/")
+            myRef.child("models").child(idToken).setValue(newObject)
+            Toast.makeText(this, "Uplaod successfull ! Press back and click on Fetch button to fetch data .", Toast.LENGTH_SHORT).show()
         }
 
 
@@ -241,6 +266,7 @@ class FormActivity : AppCompatActivity(), LocationListener {
         placeResult.addOnCompleteListener { task ->
             val likelyPlaces: PlaceLikelihoodBufferResponse = task.result
             var likely = 0f
+            var address: String? = null
             var place: String? = null
             for (placeLikelihood in likelyPlaces) {
                 Log.i(TAG, String.format("Place '%s' has likelihood: %g",
@@ -249,9 +275,12 @@ class FormActivity : AppCompatActivity(), LocationListener {
                 if (placeLikelihood.likelihood > likely) {
                     likely = placeLikelihood.likelihood
                     place = placeLikelihood.place.name.toString()
+                    address = placeLikelihood.place.address.toString()
                 }
             }
-            tv_address.text = place
+            tv_address.text = address
+            tv_place.text = place
+            tv_place.visibility = View.VISIBLE
             likelyPlaces.release()
         }
     }

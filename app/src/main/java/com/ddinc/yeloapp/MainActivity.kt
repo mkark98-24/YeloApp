@@ -55,7 +55,12 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
             intent.putExtra("p_name", prof_name.text)
             intent.putExtra("p_mail", prof_mail.text)
             intent.putExtra("p_pic", url.toString())
+            intent.putExtra("id_token", idToken)
             startActivity(intent)
+        }
+        btn_fetch.setOnClickListener {
+            val i = Intent(this, FetchActivity::class.java)
+            startActivity(i)
         }
 
     }
@@ -134,12 +139,18 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
     }
 
     lateinit var url: Uri
+    lateinit var idToken: String
 
     fun updateUI(account: FirebaseUser?) {
         if (account != null) {
             btn_login.visibility = View.GONE
             prof_name.text = account.displayName
             prof_mail.text = account.email
+            idToken = account.email.toString()
+//            account.getIdToken(true).addOnSuccessListener(OnSuccessListener<GetTokenResult> { result ->
+//                idToken = result.token!!
+//                Log.d(TAG, "GetTokenResult result = " + idToken)
+//            })
             url = account.photoUrl!!
             Glide.with(this).load(account.photoUrl).into(prof_pic)
             prof_section.visibility = View.VISIBLE
