@@ -11,15 +11,15 @@ YeloFetch is a test android app implementing following features :
 
 ### Screenshots
  ![Home Screen](./screenshots/1.jpg) 
- ![Account Selection](https://www.dropbox.com/s/ccs8lw3j05voip1/Screenshot_20180524-144253.jpg?dl=1)
- ![](https://www.dropbox.com/s/eiaoqzz0i9jur7v/Screenshot_20180524-144300.jpg?dl=1)
- ![](https://www.dropbox.com/s/zogesd30xyvi7zs/Screenshot_20180524-144308.jpg?dl=1)
- ![](https://www.dropbox.com/s/qu30445ih83j1gv/Screenshot_20180524-144315.jpg?dl=1)
- ![](https://www.dropbox.com/s/mh5ilw82qycq3h0/Screenshot_20180524-144321.jpg?dl=1)
- ![](https://www.dropbox.com/s/b0r8lan9kpafk5q/Screenshot_20180524-144341.jpg?dl=1)
- ![](https://www.dropbox.com/s/zfm1pph683rygw0/Screenshot_20180524-144347.jpg?dl=1)
- ![](https://www.dropbox.com/s/7em0tb0ephf6drh/Screenshot_20180524-144359.jpg?dl=1)
- ![](https://www.dropbox.com/s/h5h35xv21huo71d/Screenshot_20180524-144412.jpg?dl=1)
+ ![Account Selection](./screenshots/2.jpg)
+ ![](./screenshots/3.jpg)
+ ![](./screenshots/4.jpg)
+ ![](./screenshots/5.jpg)
+ ![](./screenshots/6.jpg)
+ ![](./screenshots/7.jpg)
+ ![](./screenshots/8.jpg)
+ ![](./screenshots/9.jpg)
+ ![](./screenshots/10.jpg)
 
 ### Documentation
 
