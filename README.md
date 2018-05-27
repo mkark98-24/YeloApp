@@ -10,16 +10,11 @@ YeloFetch is a test android app implementing following features :
   - Fetches all data from Realtime Firebase database
 
 ### Screenshots
- ![Home Screen](./screenshots/1.jpg) 
- ![Account Selection](./screenshots/2.jpg)
+ ![](./screenshots/1.jpg) 
+ ![](./screenshots/2.jpg)
  ![](./screenshots/3.jpg)
  ![](./screenshots/4.jpg)
- ![](./screenshots/5.jpg)
- ![](./screenshots/6.jpg)
- ![](./screenshots/7.jpg)
- ![](./screenshots/8.jpg)
- ![](./screenshots/9.jpg)
- ![](./screenshots/10.jpg)
+
 
 ### Documentation
 

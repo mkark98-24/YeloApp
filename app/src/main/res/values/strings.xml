@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">YeloApp</string>
+    <string name="facebook_app_id">213988975874711</string>
+    <string name="fb_login_protocol_scheme">fb213988975874711</string>
 </resources>

@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_form.*
 import java.io.IOException
 
@@ -66,6 +67,7 @@ class FormActivity : AppCompatActivity(), LocationListener {
     lateinit var mLocationManager: LocationManager
     lateinit var myRef: DatabaseReference
     lateinit var picUrl: String
+    lateinit var storage: FirebaseStorage
 
     private val LOG_TAG = "AudioRecordTest"
     private var mFileName: String? = null
@@ -227,6 +229,9 @@ class FormActivity : AppCompatActivity(), LocationListener {
             }
             v?.onTouchEvent(event) ?: true
         }
+
+
+        storage = FirebaseStorage.getInstance()
 
         btn_submit.setOnClickListener {
             idToken = idToken.replace(".", "_")
