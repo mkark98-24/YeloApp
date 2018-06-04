@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="fill_vertical"
-    android:background="@color/colorPrimaryDark"
+    android:backgroundTint="#3c3c3c"
+    android:backgroundTintMode="multiply"
+    android:background="@drawable/wallpaper"
     android:gravity="center"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/app_title" />
 
     <LinearLayout
@@ -162,7 +164,6 @@
             android:textColor="#ffffff" />
     </LinearLayout>
 
-
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_login"
         android:layout_width="300dp"
@@ -171,6 +172,7 @@
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
+        style="@style/FacebookLoginButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />

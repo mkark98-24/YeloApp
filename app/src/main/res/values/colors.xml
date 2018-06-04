@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#01579B</color>
-    <color name="colorPrimaryDark">#0277BD</color>
+    <color name="colorPrimary">#ffdd00</color>
+    <color name="colorPrimaryDark">#ffbb00</color>
     <color name="colorAccent">#E91E63</color>
+
+    <color name="black_overlay">#66000000</color>
+    <item name="splashBackground" type="color">#212121</item>
+      <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!--OnBoard-->
+
+    <color name="selected_dot">#ffea00</color>
+    <color name="idle_dot">#44ffea00</color>
+    <color name="ob_header">#d7d7d7</color>
+    <color name="ob_desc">#8e8e8e</color>
 </resources>

@@ -1,5 +1,19 @@
 <resources>
-    <string name="app_name">YeloApp</string>
+    <string name="app_name">YeloFetch</string>
     <string name="facebook_app_id">213988975874711</string>
     <string name="fb_login_protocol_scheme">fb213988975874711</string>
+    <string name="title_activity_on_board">OnBoardActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <!-- OnBoard Screen. -->
+
+    <string name="ob_header1">UPLOAD TO SERVER</string>
+    <string name="ob_header2">FETCH DATA FROM SERVER</string>
+    <string name="ob_header3">SECURE AUTHORIZATION</string>
+
+    <string name="ob_get_started">GET STARTED</string>
+
+    <string name="ob_desc1">Login and select address by search or gps and record audio to upload it to database.</string>
+    <string name="ob_desc2">Fetch all data uploaded by users in a simple list.</string>
+    <string name="ob_desc3">Secure account authentication using Firebase.</string>
 </resources>

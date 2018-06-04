@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/wallpaper"
+    android:backgroundTint="#3c3c3c"
+    android:backgroundTintMode="multiply"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".FormActivity">
@@ -120,7 +122,8 @@
             android:hint="Name"
             android:padding="5dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textColorHint="#a6a6a6" />
 
         <TextView
             android:id="@+id/tv_address"
@@ -130,7 +133,8 @@
             android:hint="Type in search bar to find address or turn on GPS to choose current location"
             android:padding="5dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textColorHint="#a6a6a6" />
     </LinearLayout>
 
 
@@ -148,7 +152,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tap and hold to record voice message"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:textColor="#a6a6a6" />
 
     <ImageButton
         android:id="@+id/btn_play"
@@ -163,7 +168,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tap and hold to play voice message"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:textColor="#a6a6a6" />
 
     <Button
         android:id="@+id/btn_submit"
